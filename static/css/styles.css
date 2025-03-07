@@ -1,0 +1,342 @@
+/* styles.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.header-main {
+    background-color: #0056b3;
+    color: white;
+    padding: 1rem 0;
+}
+
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.branding h1 a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-header {
+    display: flex;
+    gap: 1rem;
+}
+
+.tab-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.tab-button:hover, .tab-button.active {
+    background-color: #0056b3;
+}
+
+.tab-button.active {
+    font-weight: bold;
+}
+
+
+.tab-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* Ajuste para o footer */
+}
+
+.login-section, .projects-list-section, .project-detail-section, .new-project-section {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Ajuste conforme necessário */
+}
+
+.login-section h2, .projects-list-section h2, .project-detail-section h2, .new-project-section h2 {
+    text-align: center;
+    color: #0056b3;
+    margin-bottom: 1.5rem;
+}
+
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionamento vertical */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between; /* Alinha botões horizontalmente */
+    gap: 1rem; /* Espaçamento entre os botões */
+}
+
+
+.processing-button, .clear-cache {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Garante que links em botões não tenham sublinhado */
+    display: inline-block; /* Para poder aplicar margin/padding corretamente se for link */
+    text-align: center; /* Centraliza o texto dentro do botão */
+}
+
+.processing-button:hover, .clear-cache:hover {
+    background-color: #0056b3;
+}
+
+.clear-cache {
+    background-color: #dc3545; /* Cor vermelha para botões "clear/cancelar" */
+}
+
+.clear-cache:hover {
+    background-color: #c82333;
+}
+
+
+.projects-list {
+    list-style: none;
+    padding: 0;
+}
+
+.projects-list li {
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+}
+
+.projects-list li:last-child {
+    border-bottom: none;
+}
+
+.projects-list li a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #007bff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.projects-list li a:hover {
+    background-color: #f0f0f0;
+}
+
+.actions-bar {
+    margin-bottom: 1.5rem;
+    text-align: right; /* Alinha botões à direita */
+}
+
+.upload-section, .map-section, .summary-card {
+    background-color: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #eee;
+}
+
+.upload-section h3, .map-section h3, .summary-card h3 {
+    color: #0056b3;
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.file-label {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-bottom: 1rem; /* Espaço abaixo do label */
+}
+
+.file-label:hover {
+    background-color: #0056b3;
+}
+
+
+.file-label input[type="file"] {
+    display: none; /* Esconde o input padrão de arquivo */
+}
+
+.file-name {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.map-section #map {
+    width: 100%;
+    height: 400px; /* Altura do mapa */
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.map-section p {
+    margin-bottom: 0.5rem;
+}
+
+.footer-main {
+    background-color: #333;
+    color: #eee;
+    padding: 1rem 0;
+    text-align: center;
+    position: fixed; /* Fixa o footer na parte inferior */
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.footer-links li a {
+    color: #eee;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links li a:hover {
+    color: white;
+}
+
+
+.error-message {
+    color: white;
+    background-color: #dc3545;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.loading-overlay {
+    position: fixed; /* Fica fixo na tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco semi-transparente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Garante que fique na frente de todo o conteúdo */
+}
+
+.loading-spinner {
+    border: 8px solid #f3f3f3; /* Cinza claro */
+    border-top: 8px solid #3498db; /* Azul */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* Garante que a barra de progresso fique dentro dos limites */
+}
+
+.progress {
+    height: 100%;
+    width: 0%; /* Começa com 0% */
+    background-color: #4CAF50; /* Verde */
+    border-radius: 5px;
+    transition: width 0.3s ease; /* Animação suave */
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Estilos adicionais para o mapa Leaflet (se precisar, adicione aqui) */
+.leaflet-container {
+    background: #eee; /* Cor de fundo do mapa, se desejar */
+    border-radius: 6px;
+}

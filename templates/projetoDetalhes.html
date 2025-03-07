@@ -1,0 +1,162 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalhes do Projeto - Sistema Geo MVP{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obCBWpCV5w="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZs/nEqQVzvbv/LHPLIObyDktjt4="
+     crossorigin=""></script>
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <article class="project-detail-section" aria-labelledby="project-detail-heading">
+        <h2 id="project-detail-heading">Projeto: {{ projeto_nome if projeto_nome else 'Detalhes do Projeto' }}</h2>
+
+        <section class="summary-card" aria-labelledby="project-info-heading">
+            <h3 id="project-info-heading">Informações do Projeto</h3>
+            <p><strong>Nome da Propriedade:</strong> <span id="propriedadeNome">{{ propriedade_nome if propriedade_nome else 'Nome da Propriedade Exemplo' }}</span></p>
+            <p><strong>Número da Matrícula:</strong> <span id="matriculaNumero">{{ numero_matricula if numero_matricula else 'Número da Matrícula Exemplo' }}</span></p>
+        </section>
+
+        <section class="upload-section" aria-labelledby="upload-heading">
+            <h3 id="upload-heading">Upload da Matrícula</h3>
+            <form id="uploadForm" aria-label="Formulário de upload da matrícula">
+                <div class="form-group">
+                    <label for="fileInput" class="file-label">
+                        <span class="button-style">Escolher Arquivo PDF</span>
+                        <input type="file" id="fileInput" name="file" accept=".pdf" class="button-style">
+                    </label>
+                    <span id="fileName" class="file-name">Nenhum arquivo selecionado</span>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="processing-button">Enviar Matrícula</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="summary-card" aria-labelledby="matricula-data-heading">
+            <h3 id="matricula-data-heading">Dados da Matrícula (Input Manual)</h3>
+            <form id="matriculaDataForm" aria-label="Formulário de dados manuais da matrícula">
+                <div class="form-group">
+                    <label for="nomeImovel">Nome do Imóvel:</label>
+                    <input type="text" id="nomeImovel" name="nomeImovel">
+                </div>
+                <div class="form-group">
+                    <label for="numeroMatricula">Número da Matrícula:</label>
+                    <input type="text" id="numeroMatricula" name="numeroMatricula">
+                </div>
+                <div class="form-group">
+                    <label for="descricaoPerimetrica">Descrição Perimétrica Textual:</label>
+                    <textarea id="descricaoPerimetrica" name="descricaoPerimetrica" rows="5"></textarea>
+                </div>
+                <div class="button-group">
+                    <button type="submit" class="processing-button">Salvar Dados da Matrícula</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="summary-card map-section" aria-labelledby="map-heading">
+            <h3 id="map-heading">Delimitação Geográfica</h3>
+            <div id="map" style="height: 400px;" aria-label="Mapa interativo para delimitação geográfica"></div>
+            <p><strong>Área:</strong> <span id="areaCalculada" aria-live="polite"></span></p>
+            <p><strong>Perímetro:</strong> <span id="perimetroCalculado" aria-live="polite"></span></p>
+            <div class="button-group">
+                 <button type="button" id="desenharPoligono" class="processing-button">Desenhar Delimitação no Mapa</button>
+                 <button type="button" id="salvarDelimitacao" class="clear-cache" disabled>Salvar Delimitação</button>
+            </div>
+        </section>
+
+    </article>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    var map = L.map('map').setView([-15.7934, -47.8822], 5); // Centro do Brasil como padrão
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+
+    var drawControl = new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems
+        },
+        draw: {
+            polygon: true,
+            polyline: false,
+            rectangle: false,
+            circle: false,
+            marker: false
+        }
+    });
+    map.addControl(drawControl);
+
+    map.on('draw:created', function (e) {
+        var type = e.layerType,
+            layer = e.layer;
+
+        if (type === 'polygon') {
+            drawnItems.clearLayers(); // Limpa qualquer polígono anterior
+            drawnItems.addLayer(layer);
+
+            var latlngs = layer.getLatLngs()[0];
+            var area = L.GeometryUtil.geodesicArea(latlngs);
+            var perimeter = L.GeometryUtil.geodesicLength(latlngs);
+
+            document.getElementById('areaCalculada').textContent = (area / 10000).toFixed(2) + ' hectares'; // Área em hectares
+            document.getElementById('perimetroCalculado').textContent = (perimeter / 1000).toFixed(2) + ' km'; // Perímetro em km
+            document.getElementById('salvarDelimitacao').disabled = false; // Habilita o botão "Salvar Delimitação"
+        }
+    });
+
+    map.on('draw:edited', function (e) {
+        var layers = e.layers;
+        layers.eachLayer(function (layer) {
+            if (layer instanceof L.Polygon) {
+                var latlngs = layer.getLatLngs()[0];
+                var area = L.GeometryUtil.geodesicArea(latlngs);
+                var perimeter = L.GeometryUtil.geodesicLength(latlngs);
+
+                document.getElementById('areaCalculada').textContent = (area / 10000).toFixed(2) + ' hectares';
+                document.getElementById('perimetroCalculado').textContent = (perimeter / 1000).toFixed(2) + ' km';
+            }
+        });
+    });
+
+    map.on('draw:deleted', function (e) {
+        drawnItems.clearLayers();
+        document.getElementById('areaCalculada').textContent = '';
+        document.getElementById('perimetroCalculado').textContent = '';
+        document.getElementById('salvarDelimitacao').disabled = true; // Desabilita o botão "Salvar Delimitação" quando não há polígono
+    });
+
+
+    document.getElementById('desenharPoligono').addEventListener('click', function() {
+        // Inicia a ferramenta de desenho de polígono (se já não estiver ativa)
+        if (!drawControl._toolbars.draw._activeMode) {
+            drawControl.setDrawingOptions({ polyline: false, polygon: true, rectangle: false, circle: false, marker: false });
+            drawControl._toolbars.draw.enable();
+        }
+    });
+
+    document.getElementById('salvarDelimitacao').addEventListener('click', function() {
+        var geoJson = drawnItems.toGeoJSON();
+        var geoJsonString = JSON.stringify(geoJson);
+        // Aqui você pode adicionar o código para enviar 'geoJsonString' para o backend
+        console.log("GeoJSON para Salvar:", geoJsonString);
+        alert("Delimitação salva (simulação - GeoJSON no console)"); // Simulação de salvamento
+    });
+
+
+</script>
+{% endblock %}

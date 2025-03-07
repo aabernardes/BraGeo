@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}Projetos - Sistema Geo MVP{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+     <section class="projects-list-section" aria-labelledby="projects-heading">
+     <h2 id="projects-heading">Meus Projetos</h2>
+
+    <div class="actions-bar">
+      <button class="processing-button" onclick="window.location.href='{{ url_for(routes.projetoNovo) }}'">Novo Projeto</button>
+
+      </div>
+
+    <ul class="projects-list" aria-labelledby="projects-heading">
+      <li><a href="{{ url_for('routes.projeto_detalhe', projeto_id=1) }}">Projeto Exemplo 1 - Fazenda Esperança</a></li>
+      <li><a href="{{ url_for('routes.projeto_detalhe', projeto_id=2) }}">Projeto Exemplo 2 - Sítio Alegre</a></li>
+      <li><a href="{{ url_for('routes.projeto_detalhe', projeto_id=3) }}">Projeto Exemplo 3 - Chácara Bonita</a></li>
+    </ul>
+  </section>
+</div>
+{% endblock %}

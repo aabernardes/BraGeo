@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}Sistema de Georreferenciamento MVP{% endblock %}
+    </title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header class="header-main">
+      <nav class="nav-bar" aria-label="Navegação principal">
+        <div class="branding">
+          <h1>
+            <a
+              href="{{ url_for('routes.projetos') }}"
+              style="color: inherit; text-decoration: none"
+              >Sistema Geo MVP</a
+            >
+          </h1>
+        </div>
+        <div class="nav-header">
+          <a
+            href="{{ url_for('routes.projetos') }}"
+            class="tab-button {% if request.endpoint == 'routes.projetos' %}active{% endif %}"
+            aria-current="page"
+            >Projetos</a
+          >
+          <a href="{{ url_for('routes.logout') }}" class="tab-button">Logout</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="tab-container" id="main-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer-main">
+      <div class="footer-content">
+        <p>&copy; 2024 - [Nome da Sua Empresa/Você]</p>
+        <nav aria-label="Links do rodapé">
+          <ul class="footer-links" role="list">
+            <li><a href="#" role="listitem">Política de Privacidade</a></li>
+            <li><a href="#" role="listitem">Termos de Uso</a></li>
+            <li><a href="#" role="listitem">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+
+    <div
+      id="errorMessage"
+      class="error-message"
+      hidden
+      aria-live="assertive"
+    ></div>
+
+    <div class="loading-overlay" hidden>
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Processando...</p>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='javScript/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

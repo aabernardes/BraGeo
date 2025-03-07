@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block title %}Login - Sistema Geo MVP{% endblock %}
+
+{% block content %}
+<div class="login-container wrapper">
+    <section class="login-section" aria-labelledby="login-heading">
+        <h2 id="login-heading">Acesso ao Sistema</h2>
+        <form id="loginForm" method="POST" action="/login" aria-label="Formulário de login">
+            <div class="form-group">
+                <label for="email">Email ou Usuário:</label>
+                <input type="text" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="processing-button">Entrar</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}
